@@ -116,23 +116,27 @@ data['generic_repeat_positions'] = outs[2]
 data['generic_repeat_Hamming_distances'] = outs[1]
 data['generic_repeat_mean_Hamming_distance'] = outs[3]
 
+data['generic_repeat'] = data['generic_repeat'].fillna('NONE')
+unique_gr = data['generic_repeat'].unique()
 
 trois_generique = dict()
-for i in data['generic_repeat'].unique():
+trois_generique['NONE'] = 0
+for i in unique_gr:
     if i not in trois_generique.keys():
         trois_generique[i] = sequence_entropy(i,3)
 
 catre_generique = dict()
-for i in data['generic_repeat'].unique():
+catre_generique['NONE'] = 0
+for i in unique_gr:
     if i not in catre_generique.keys():
         catre_generique[i] = sequence_entropy(i,4)
 
 cinque_generique = dict()
-for i in data['generic_repeat'].unique():
+cinque_generique['NONE'] = 0
+for i in unique_gr:
     if i not in cinque_generique.keys():
         cinque_generique[i] = sequence_entropy(i,5)
         
-    
 data['generic_repeat_3mer_entropy'] = [trois_generique[i] for i in data['generic_repeat']]
 data['generic_repeat_4mer_entropy'] = [catre_generique[i] for i in data['generic_repeat']]
 data['generic_repeat_5mer_entropy'] = [cinque_generique[i] for i in data['generic_repeat']]
