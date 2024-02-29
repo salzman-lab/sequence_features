@@ -6,7 +6,7 @@ import multiprocessing as mp
 import sys
 
 def hamming_distance(seq1, seq2):
-    return np.sum(np.array(list(seq1)) != np.array(list(seq2)))
+    return sum(c1 != c2 for c1, c2 in zip(seq1, seq2))
 
 def generate_word_combinations(elements, length):
     return [''.join(combination) for combination in product(elements, repeat=length)]
@@ -105,18 +105,24 @@ data['periodic_repeat_positions'] = outs[3]
 data['periodic_repeat_mean_Hamming_distance'] = outs[4]
 data['periodic_repeat_length'] = outs[5]
         
+data['periodic_repeat'] = data['periodic_repeat'].fillna('NONE')
+unique_pr = data['periodic_repeat'].unique()
+
 trois_periodique = dict()
-for i in data['periodic_repeat'].unique():
+trois_periodique['NONE'] = 0
+for i in unique_pr:
     if i not in trois_periodique.keys():
         trois_periodique[i] = sequence_entropy(i,3)
         
 catre_periodique = dict()
-for i in data['periodic_repeat'].unique():
+catre_periodique['NONE'] = 0
+for i in unique_pr:
     if i not in catre_periodique.keys():
         catre_periodique[i] = sequence_entropy(i,4)
         
 cinque_periodique = dict()
-for i in data['periodic_repeat'].unique():
+cinque_periodique['NONE'] = 0
+for i in unique_pr:
     if i not in cinque_periodique.keys():
         cinque_periodique[i] = sequence_entropy(i,5)
     
@@ -125,4 +131,3 @@ data['periodic_repeat_4mer_entropy'] = [catre_periodique[i] for i in data['perio
 data['periodic_repeat_5mer_entropy'] = [cinque_periodique[i] for i in data['periodic_repeat']]
 
 data.to_csv(sys.argv[2],sep='\t',index=None)
-
