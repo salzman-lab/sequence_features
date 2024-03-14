@@ -17,3 +17,9 @@ A script to identify nonoverlapping repeats occurring at a fixed interval in nuc
 ### mmseqs_search.sh
 Usage here is simple. Make and move to a working directory specific to this instance of the job. Do ```sbatch mmseqs_search.sh ${input_fasta} ${input_fasta_database_name}```. MMseqs2 will produce a database having this name from this FASTA, and it will search against my installation of the UniProtKB protein database. 
 
+### run_orfipy.sh 
+Simply move to a specific working directory and do ```sbatch run_orfipy.sh ${input_fasta}```. The script will extract ORFs of minimum length 36nt, where partial 3' or 5' fragments are permitted. This means that the ORF will still be reported even if it is not enclosed by the opposite end (if read length ends before the ORF is closed).
+
+### mmseqs2_build_and_cluster.sh 
+Move to a specific working directory and do ```sbatch mmseqs2_build_and_cluster.sh ${input_protein_fasta} ${clustered_database_name (output)} ${fraction_coverage}```. Fraction coverage identifies the tolerance the aligned window size between a query sequence and target for cluster membership. In this code, I use --cov_mode 0, which means the target can cover 80% of the query or vice versa when considering membership.
+
