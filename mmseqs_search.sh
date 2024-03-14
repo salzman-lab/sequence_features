@@ -6,6 +6,8 @@
 
 source /oak/stanford/groups/horence/george/dog/bin/activate
 
+## The user passes a path to an input in the first command-line argument.
+## The user defines a database name in the second command-line argument. 
 input_fasta=$1
 input_database=$2
 
